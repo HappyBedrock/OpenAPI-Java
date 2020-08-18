@@ -1,0 +1,6 @@
+name: 'OpenAPI'
+api: '1.0.0'
+version: '1.0.0'
+description: 'Open API for people who want help with BedrockPlay development'
+author: 'VixikHD'
+main: eu.bedrockplay.openapi.OpenAPI

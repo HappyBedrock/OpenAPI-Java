@@ -1,0 +1,9 @@
+eu\bedrockplay\openapi\mysql\query\LazyRegisterQuery.class
+eu\bedrockplay\openapi\ranks\Rank.class
+eu\bedrockplay\openapi\mysql\query\UpdateRowQuery.class
+eu\bedrockplay\openapi\OpenAPI.class
+eu\bedrockplay\openapi\mysql\DatabaseData.class
+eu\bedrockplay\openapi\mysql\QueryQueue.class
+eu\bedrockplay\openapi\ranks\RankDatabase.class
+eu\bedrockplay\openapi\mysql\AsyncQuery.class
+eu\bedrockplay\openapi\ranks\RankDatabase$1.class
