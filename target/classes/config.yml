@@ -1,9 +1,0 @@
----
-# Server settings
-current-server-name: "Lobby-1"
-
-# Database connection, for creating table scripts, contact vixik
-mysql-host: ""
-mysql-user: ""
-mysql-password: ""
-...
