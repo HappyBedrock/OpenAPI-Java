@@ -23,7 +23,7 @@ public class ScoreboardBuilder {
         String[] splitText = text.split("\n");
         String title = splitText[0];
 
-        System.arraycopy(splitText, 1, splitText, 0, splitText.length);
+        splitText = Arrays.copyOfRange(splitText, 1, splitText.length);
 
         if((!ScoreboardBuilder.titles.containsKey(player.getName())) || (!ScoreboardBuilder.titles.get(player.getName()).equals(title))) {
             if(ScoreboardBuilder.titles.containsKey(player.getName())) {

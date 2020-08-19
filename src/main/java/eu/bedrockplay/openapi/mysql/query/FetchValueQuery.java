@@ -29,6 +29,7 @@ public class FetchValueQuery extends AsyncQuery {
     public void query(Statement statement) throws SQLException {
         ResultSet result = statement.executeQuery("SELECT " + this.key + " FROM " + this.table + " WHERE Name='" + this.player + "';");
 
-        this.value = result.getObject(1);
+        if(result.getMetaData().getColumnCount() > 0)
+            this.value = result.getObject(1);
     }
 }

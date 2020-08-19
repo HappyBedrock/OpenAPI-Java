@@ -44,7 +44,7 @@ public class RankDatabase {
     }
 
     public static void savePlayerRank(Player player, String rank, boolean saveToDatabase) {
-        Rank targetRank = ranks.get(rank);
+        Rank targetRank = RankDatabase.getRankByName(rank);
         if(targetRank == null) {
             player.kick("Invalid rank (" + rank + ")");
             OpenAPI.getInstance().getLogger().error("Invalid rank received from database (" + rank + ") for player " + player.getName() + "!");
@@ -64,10 +64,10 @@ public class RankDatabase {
     }
 
     public static Rank getPlayerRank(Player player) {
-        return ranks.get(player.namedTag.getString("Rank"));
+        return RankDatabase.getRankByName(player.namedTag.getString("Rank"));
     }
 
     public static Rank getRankByName(String name) {
-        return ranks.get(name);
+        return ranks.get(name.toLowerCase());
     }
 }

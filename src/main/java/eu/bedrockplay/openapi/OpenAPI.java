@@ -25,6 +25,8 @@ public class OpenAPI extends PluginBase implements Listener {
         OpenAPI.instance = this;
         this.saveResource("/config.yml");
 
+        RankDatabase.init();
+
         this.getServer().getPluginManager().registerEvents(this, this);
 
         DatabaseData.update(
