@@ -4,11 +4,15 @@ import cn.nukkit.Player;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerLoginEvent;
+import cn.nukkit.network.Network;
 import cn.nukkit.plugin.PluginBase;
 import eu.bedrockplay.openapi.mysql.DatabaseData;
 import eu.bedrockplay.openapi.mysql.QueryQueue;
 import eu.bedrockplay.openapi.mysql.query.LazyRegisterQuery;
 import eu.bedrockplay.openapi.ranks.RankDatabase;
+import eu.bedrockplay.openapi.scoreboard.packets.RemoveObjectivePacket;
+import eu.bedrockplay.openapi.scoreboard.packets.SetDisplayObjectivePacket;
+import eu.bedrockplay.openapi.scoreboard.packets.SetScorePacket;
 import lombok.Getter;
 
 public class OpenAPI extends PluginBase implements Listener {
@@ -28,6 +32,10 @@ public class OpenAPI extends PluginBase implements Listener {
                 (String) this.getConfig().get("mysql-user"),
                 (String) this.getConfig().get("mysql-password")
         );
+
+        this.getServer().getNetwork().registerPacket((byte)0x6a, RemoveObjectivePacket.class);
+        this.getServer().getNetwork().registerPacket((byte)0x6b, SetDisplayObjectivePacket.class);
+        this.getServer().getNetwork().registerPacket((byte)0x6c, SetScorePacket.class);
     }
 
     @EventHandler

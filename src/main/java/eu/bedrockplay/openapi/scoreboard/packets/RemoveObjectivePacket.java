@@ -1,0 +1,23 @@
+package eu.bedrockplay.openapi.scoreboard.packets;
+
+import cn.nukkit.network.protocol.DataPacket;
+
+public class RemoveObjectivePacket extends DataPacket {
+
+    public String objectiveName;
+
+    @Override
+    public byte pid() {
+        return (byte) 0x6a;
+    }
+
+    @Override
+    public void decode() {
+
+    }
+
+    @Override
+    public void encode() {
+        this.putString(this.objectiveName);
+    }
+}
