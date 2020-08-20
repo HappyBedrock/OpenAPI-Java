@@ -22,6 +22,7 @@ public abstract class AsyncQuery extends AsyncTask {
 
         Connection connection = DriverManager.getConnection("jdbc:mysql://" + this.host + ":3306/" + DatabaseData.DATABASE, this.user, this.password);
         this.query(connection.createStatement());
+        connection.close();
     }
 
     @Override

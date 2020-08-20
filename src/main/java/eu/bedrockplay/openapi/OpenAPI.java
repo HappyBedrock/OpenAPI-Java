@@ -13,6 +13,7 @@ import eu.bedrockplay.openapi.ranks.RankDatabase;
 import eu.bedrockplay.openapi.scoreboard.packets.RemoveObjectivePacket;
 import eu.bedrockplay.openapi.scoreboard.packets.SetDisplayObjectivePacket;
 import eu.bedrockplay.openapi.scoreboard.packets.SetScorePacket;
+import eu.bedrockplay.openapi.servers.ServerManager;
 import lombok.Getter;
 
 public class OpenAPI extends PluginBase implements Listener {
@@ -26,6 +27,7 @@ public class OpenAPI extends PluginBase implements Listener {
         this.saveResource("/config.yml");
 
         RankDatabase.init();
+        ServerManager.init();
 
         this.getServer().getPluginManager().registerEvents(this, this);
 
@@ -38,6 +40,11 @@ public class OpenAPI extends PluginBase implements Listener {
         this.getServer().getNetwork().registerPacket((byte)0x6a, RemoveObjectivePacket.class);
         this.getServer().getNetwork().registerPacket((byte)0x6b, SetDisplayObjectivePacket.class);
         this.getServer().getNetwork().registerPacket((byte)0x6c, SetScorePacket.class);
+    }
+
+    @Override
+    public void onDisable() {
+        ServerManager.save();
     }
 
     @EventHandler
