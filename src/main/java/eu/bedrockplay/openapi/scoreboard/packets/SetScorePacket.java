@@ -21,6 +21,8 @@ public class SetScorePacket extends DataPacket {
 
     @Override
     public void encode() {
+        this.reset(); // WTF
+
         this.putByte(this.type);
         this.putUnsignedVarInt(this.entries.length);
 

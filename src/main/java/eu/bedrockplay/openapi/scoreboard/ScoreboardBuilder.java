@@ -78,32 +78,36 @@ public class ScoreboardBuilder {
     }
 
     public static void sendLines(Player player, String[] splitText) {
-        ScoreboardBuilder.sendLines(player, splitText, new int[0]);
+        ScoreboardBuilder.sendLines(player, splitText, null);
     }
 
     public static void sendLines(Player player, String[] splitText, int[] filter) {
         if(filter != null) {
+            List<String> filterTempSet = new ArrayList<>(Arrays.asList(splitText));
+
             for(int i = 0; i < splitText.length; i++) {
                 int finalI = i;
                 if(Arrays.stream(filter).anyMatch(j -> j == finalI)) {
-                    splitText[i] = null;
+                    filterTempSet.add(splitText[i]);
                 }
             }
+
+            splitText = filterTempSet.toArray(new String[0]);
+            System.out.println(Arrays.toString(splitText));
         }
 
         ScorePacketEntry[] entries = new ScorePacketEntry[splitText.length];
-
         for(int i = 0; i < splitText.length; i++) {
             String line = splitText[i];
             if(line != null) {
                 ScorePacketEntry entry = new ScorePacketEntry();;
                 entry.objectiveName = player.getName().toLowerCase();
-                entry.scoreboardId = entry.score = i + 1;
+                entry.scoreboardId = i + 1;
+                entry.score = i + 1;
                 entry.type = ScorePacketEntry.TYPE_FAKE_PLAYER;
                 entry.customName = line;
 
                 entries[i] = entry;
-                i++;
             }
         }
 
@@ -119,7 +123,7 @@ public class ScoreboardBuilder {
             List<Integer> updateList = new ArrayList<>();
 
             for(int i = 0; i < splitText.length; i++) {
-                if(!oldSplitText[i].equals(splitText[i])) {
+                if(oldSplitText[i] == null || splitText[i] == null || !oldSplitText[i].equals(splitText[i])) {
                     updateList.add(i);
                 }
             }
@@ -132,8 +136,8 @@ public class ScoreboardBuilder {
         if(oldSplitText.length > splitText.length) {
             List<Integer> updateList = new ArrayList<>();
 
-            for(int i = 0; i < splitText.length; i++) {
-                if(splitText[i] == null) { // in php version, there is isset(), I'm not sure this will work.
+            for(int i = 0; i < oldSplitText.length; i++) {
+                if(i >= splitText.length || splitText[i] == null) {
                     updateList.add(i);
                     continue;
                 }
@@ -153,18 +157,18 @@ public class ScoreboardBuilder {
         List<Integer> toRemove = new ArrayList<>();
         List<Integer> toSend = new ArrayList<>();
 
-        int i = 0;
-        for(String line : splitText) {
-            if(oldSplitText[i] == null) {
+        for(int i = 0; i < splitText.length; i++) {
+            String line = splitText[i];
+
+            if(i >= oldSplitText.length || oldSplitText[i] == null) {
                 toSend.add(i);
-                i++;
                 continue;
             }
+
             if(!oldSplitText[i].equals(line)) {
                 toRemove.add(i);
                 toSend.add(i);
             }
-            i++;
         }
 
         ScoreboardBuilder.removeLines(player, toRemove.stream().mapToInt(j -> j).toArray());
@@ -173,14 +177,15 @@ public class ScoreboardBuilder {
 
     private static void removeLines(Player player, int[] lines) {
         ScorePacketEntry[] entries = new ScorePacketEntry[lines.length];
-        int i = 0;
-        for(int lineIndex : lines) {
+        for(int i = 0; i < lines.length; i++) {
+            int lineNumber = lines[i];
+
             ScorePacketEntry entry = new ScorePacketEntry();
             entry.objectiveName = player.getName().toLowerCase();
-            entry.scoreboardId = entry.score = lineIndex + 1;
+            entry.scoreboardId = lineNumber + 1;
+            entry.score = lineNumber + 1;
 
             entries[i] = entry;
-            i++;
         }
 
         SetScorePacket pk = new SetScorePacket();

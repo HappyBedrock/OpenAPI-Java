@@ -22,6 +22,8 @@ public class SetDisplayObjectivePacket extends DataPacket {
 
     @Override
     public void encode() {
+        this.reset(); // WTF
+
         this.putString(this.displaySlot);
         this.putString(this.objectiveName);
         this.putString(this.displayName);

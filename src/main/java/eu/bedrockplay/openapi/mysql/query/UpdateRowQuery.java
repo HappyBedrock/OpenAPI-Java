@@ -36,6 +36,6 @@ public class UpdateRowQuery extends AsyncQuery {
             updates.add(key + "='" + String.valueOf(this.updates.get(key)) + "'");
         }
 
-        statement.executeQuery("UPDATE " + this.table + " SET " + String.join(",", updates) + " WHERE " + this.conditionKey + "='" + this.conditionValue + "';");
+        statement.executeUpdate("UPDATE " + this.table + " SET " + String.join(",", updates) + " WHERE " + this.conditionKey + "='" + this.conditionValue + "';");
     }
 }
