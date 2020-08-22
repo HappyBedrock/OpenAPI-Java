@@ -25,10 +25,7 @@ public class OpenAPI extends PluginBase implements Listener {
     public void onEnable() {
         OpenAPI.instance = this;
         this.saveResource("/config.yml");
-
-        RankDatabase.init();
-        ServerManager.init();
-
+        
         this.getServer().getPluginManager().registerEvents(this, this);
 
         DatabaseData.update(
@@ -36,6 +33,9 @@ public class OpenAPI extends PluginBase implements Listener {
                 (String) this.getConfig().get("mysql-user"),
                 (String) this.getConfig().get("mysql-password")
         );
+
+        RankDatabase.init();
+        ServerManager.init();
 
         this.getServer().getNetwork().registerPacket((byte)0x6a, RemoveObjectivePacket.class);
         this.getServer().getNetwork().registerPacket((byte)0x6b, SetDisplayObjectivePacket.class);
