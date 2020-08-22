@@ -59,7 +59,7 @@ public class ServerManager {
     @SneakyThrows
     public static void save() {
         UpdateRowQuery query = new UpdateRowQuery(new HashMap<String, Object>() {{
-            this.put("IsOnline", false);
+            this.put("IsOnline", 0);
             this.put("OnlinePlayers", 0);
         }}, "ServerName", ServerManager.getCurrentServer().getServerName(), "Servers");
 

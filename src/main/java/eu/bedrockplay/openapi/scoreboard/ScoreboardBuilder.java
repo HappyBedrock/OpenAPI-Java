@@ -93,7 +93,6 @@ public class ScoreboardBuilder {
             }
 
             splitText = filterTempSet.toArray(new String[0]);
-            System.out.println(Arrays.toString(splitText));
         }
 
         ScorePacketEntry[] entries = new ScorePacketEntry[splitText.length];
