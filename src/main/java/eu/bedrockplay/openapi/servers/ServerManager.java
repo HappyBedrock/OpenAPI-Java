@@ -1,6 +1,5 @@
 package eu.bedrockplay.openapi.servers;
 
-import cn.nukkit.utils.Hash;
 import eu.bedrockplay.openapi.OpenAPI;
 import eu.bedrockplay.openapi.mysql.DatabaseData;
 import eu.bedrockplay.openapi.mysql.QueryQueue;
@@ -29,6 +28,8 @@ public class ServerManager {
     public static void init() {
         String currentServerName = OpenAPI.getInstance().getConfig().getString("current-server-name");
         int currentServerPort = cn.nukkit.Server.getInstance().getPropertyInt("server-port");
+
+        System.out.println(currentServerName);
 
         ServerManager.updateServerData(currentServerName, "null", currentServerPort, 0, true, false);
         QueryQueue.submitQuery(new LazyRegisterServerQuery(currentServerName, currentServerPort));
