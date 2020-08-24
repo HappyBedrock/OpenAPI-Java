@@ -4,8 +4,10 @@ import cn.nukkit.Player;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerLoginEvent;
+import cn.nukkit.event.player.PlayerQuitEvent;
 import cn.nukkit.network.Network;
 import cn.nukkit.plugin.PluginBase;
+import eu.bedrockplay.openapi.bossbar.BossBarBuilder;
 import eu.bedrockplay.openapi.mysql.DatabaseData;
 import eu.bedrockplay.openapi.mysql.QueryQueue;
 import eu.bedrockplay.openapi.mysql.query.LazyRegisterQuery;
@@ -54,5 +56,10 @@ public class OpenAPI extends PluginBase implements Listener {
         QueryQueue.submitQuery(new LazyRegisterQuery(event.getPlayer().getName()), (query -> {
             RankDatabase.savePlayerRank(player, String.valueOf(((LazyRegisterQuery)query).row.get("Rank")));
         }));
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        BossBarBuilder.removeBossBar(event.getPlayer());
     }
 }

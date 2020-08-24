@@ -27,7 +27,19 @@ public class LazyRegisterQuery extends AsyncQuery {
 
         int columnCount = result.getMetaData().getColumnCount();
         for(int i = 1; i <= columnCount; i++) {
-            this.row.put(result.getMetaData().getColumnName(i), result.getObject(i));
+            String key = result.getMetaData().getColumnName(i);
+            Object value = result.getObject(i);
+
+            if(key == null) {
+                System.out.println("[OpenAPI/LazyReqisterQuery] Could not find column name at i=" + i);
+                continue;
+            }
+            if(value == null) {
+//                System.out.println("[OpenAPI/LazyRegisterQuery] Could not find object at i="+i+" and column="+key);
+                continue;
+            }
+
+            this.row.put(key, value);
         }
     }
 }

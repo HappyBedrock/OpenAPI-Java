@@ -4,3 +4,38 @@ version: '1.0.0'
 description: 'Open API for people who want help with BedrockPlay development'
 author: 'VixikHD'
 main: eu.bedrockplay.openapi.OpenAPI
+
+permissions:
+  bedrockplay.voter:
+    description: 'Permission for people who voted'
+    default: 'op'
+  bedrockplay.operator:
+    default: 'op'
+    description: 'Permissions for Owners, Developers and Admins'
+    children:
+      bedrockplay.moderator:
+        default: 'op'
+        description: 'Permissions for Moderators'
+        children:
+          bedrockplay.helper: # Yes, helper hasn't Bedrock rank permissions
+            default: 'op'
+            description: 'Permissions for Helpers'
+          bedrockplay.builder:
+            default: 'op'
+            description: 'Permissions for Builders'
+            children:
+              bedrockplay.youtube:
+                default: 'op'
+                description: 'Permissions for people with YOUTUBE rank'
+                children:
+                  bedrockplay.bedrock:
+                    default: 'op'
+                    description: 'Permissions for people with BEDROCK rank'
+                    children:
+                      bedrockplay.mvp:
+                        default: 'op'
+                        description: 'Permissions for people with MVP rank'
+                        children:
+                          bedrockplay.vip:
+                            default: 'op'
+                            description: 'Permissions for people with VIP'
