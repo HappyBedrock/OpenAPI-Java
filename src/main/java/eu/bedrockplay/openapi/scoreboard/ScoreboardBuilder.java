@@ -7,6 +7,8 @@ import eu.bedrockplay.openapi.scoreboard.packets.SetScorePacket;
 import eu.bedrockplay.openapi.scoreboard.packets.entry.ScorePacketEntry;
 
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class ScoreboardBuilder {
 
@@ -82,31 +84,34 @@ public class ScoreboardBuilder {
     }
 
     public static void sendLines(Player player, String[] splitText, int[] filter) {
+        int entryCount = splitText.length;
         if(filter != null) {
-            List<String> filterTempSet = new ArrayList<>(Arrays.asList(splitText));
+            List<Integer> filterList = Arrays.stream(filter).boxed().collect(Collectors.toList()); // int[] to List<Integer> convert
+            entryCount = 0;
 
             for(int i = 0; i < splitText.length; i++) {
-                int finalI = i;
-                if(Arrays.stream(filter).anyMatch(j -> j == finalI)) {
-                    filterTempSet.add(splitText[i]);
+                if(!filterList.contains(i)) {
+                    splitText[i] = null;
+                    continue;
                 }
+                entryCount++;
             }
-
-            splitText = filterTempSet.toArray(new String[0]);
         }
 
-        ScorePacketEntry[] entries = new ScorePacketEntry[splitText.length];
+        ScorePacketEntry[] entries = new ScorePacketEntry[entryCount];
+
+        int j = 0;
         for(int i = 0; i < splitText.length; i++) {
             String line = splitText[i];
             if(line != null) {
-                ScorePacketEntry entry = new ScorePacketEntry();;
+                ScorePacketEntry entry = new ScorePacketEntry();
                 entry.objectiveName = player.getName().toLowerCase();
                 entry.scoreboardId = i + 1;
                 entry.score = i + 1;
                 entry.type = ScorePacketEntry.TYPE_FAKE_PLAYER;
                 entry.customName = line;
 
-                entries[i] = entry;
+                entries[j++] = entry;
             }
         }
 
@@ -127,8 +132,12 @@ public class ScoreboardBuilder {
                 }
             }
 
-            ScoreboardBuilder.removeLines(player, updateList.stream().mapToInt(i -> i).toArray());
-            ScoreboardBuilder.sendLines(player, splitText, updateList.stream().mapToInt(i -> i).toArray());
+            int[] updates = updateList.stream().mapToInt(i -> i).toArray();
+            System.out.println(Arrays.toString(updates));
+            System.out.println(splitText.toString());
+
+            ScoreboardBuilder.removeLines(player, updates);
+            ScoreboardBuilder.sendLines(player, splitText, updates);
             return;
         }
 
