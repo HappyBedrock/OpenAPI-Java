@@ -29,8 +29,6 @@ public class ServerManager {
         String currentServerName = OpenAPI.getInstance().getConfig().getString("current-server-name");
         int currentServerPort = cn.nukkit.Server.getInstance().getPropertyInt("server-port");
 
-        System.out.println(currentServerName);
-
         ServerManager.updateServerData(currentServerName, "null", currentServerPort, 0, true, false);
         QueryQueue.submitQuery(new LazyRegisterServerQuery(currentServerName, currentServerPort));
 

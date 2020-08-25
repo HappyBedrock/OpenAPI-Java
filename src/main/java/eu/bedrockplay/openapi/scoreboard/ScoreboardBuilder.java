@@ -7,7 +7,6 @@ import eu.bedrockplay.openapi.scoreboard.packets.SetScorePacket;
 import eu.bedrockplay.openapi.scoreboard.packets.entry.ScorePacketEntry;
 
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class ScoreboardBuilder {
@@ -133,8 +132,6 @@ public class ScoreboardBuilder {
             }
 
             int[] updates = updateList.stream().mapToInt(i -> i).toArray();
-            System.out.println(Arrays.toString(updates));
-            System.out.println(splitText.toString());
 
             ScoreboardBuilder.removeLines(player, updates);
             ScoreboardBuilder.sendLines(player, splitText, updates);
