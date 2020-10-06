@@ -5,8 +5,11 @@ import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerLoginEvent;
 import cn.nukkit.event.player.PlayerQuitEvent;
+import cn.nukkit.event.server.DataPacketReceiveEvent;
+import cn.nukkit.network.protocol.ModalFormResponsePacket;
 import cn.nukkit.plugin.PluginBase;
 import eu.bedrockplay.openapi.bossbar.BossBarBuilder;
+import eu.bedrockplay.openapi.form.FormQueue;
 import eu.bedrockplay.openapi.mysql.DatabaseData;
 import eu.bedrockplay.openapi.mysql.QueryQueue;
 import eu.bedrockplay.openapi.mysql.query.LazyRegisterQuery;
@@ -58,7 +61,17 @@ public class OpenAPI extends PluginBase implements Listener {
     }
 
     @EventHandler
+    public void onFormHandle(DataPacketReceiveEvent event) {
+        if(event.getPacket() instanceof ModalFormResponsePacket) {
+            if(FormQueue.handleFormDataPacket(event.getPlayer(), (ModalFormResponsePacket) event.getPacket())) {
+                event.setCancelled();
+            }
+        }
+    }
+
+    @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         BossBarBuilder.removeBossBar(event.getPlayer());
+        FormQueue.handleQuit(event.getPlayer());
     }
 }
