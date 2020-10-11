@@ -67,7 +67,7 @@ public class FormQueue {
             form.getCallback().accept(new FormCallbackResponse(player, form, packet.data));
         }
 
-        FormQueue.formQueue.remove(player.getName());
+        FormQueue.formQueue.get(player.getName()).remove(packet.formId);
         return true;
     }
 }
