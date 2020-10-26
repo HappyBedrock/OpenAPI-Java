@@ -33,7 +33,7 @@ public class UpdateRowQuery extends AsyncQuery {
     public void query(Statement statement) throws SQLException {
         List<String> updates = new ArrayList<>();
         for(String key : this.updates.keySet()) {
-            updates.add(key + "='" + String.valueOf(this.updates.get(key)) + "'");
+            updates.add(key + "='" + this.updates.get(key) + "'");
         }
 
         statement.executeUpdate("UPDATE " + this.table + " SET " + String.join(",", updates) + " WHERE " + this.conditionKey + "='" + this.conditionValue + "';");
