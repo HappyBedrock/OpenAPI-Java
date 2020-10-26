@@ -3,39 +3,39 @@ api: '1.0.0'
 version: '1.0.0'
 description: 'Open API for people who want help with BedrockPlay development'
 author: 'VixikHD'
-main: eu.bedrockplay.openapi.OpenAPI
+main: eu.happybe.openapi.OpenAPI
 
 permissions:
-  bedrockplay.voter:
+  happybe.voter:
     description: 'Permission for people who voted'
     default: 'op'
-  bedrockplay.operator:
+  happybe.operator:
     default: 'op'
     description: 'Permissions for Owners, Developers and Admins'
     children:
-      bedrockplay.moderator:
+      happybe.moderator:
         default: 'op'
         description: 'Permissions for Moderators'
         children:
-          bedrockplay.helper: # Yes, helper hasn't Bedrock rank permissions
+          happybe.helper: # Yes, helper hasn't Bedrock rank permissions
             default: 'op'
             description: 'Permissions for Helpers'
-          bedrockplay.builder:
+          happybe.builder:
             default: 'op'
             description: 'Permissions for Builders'
             children:
-              bedrockplay.youtube:
+              happybe.youtube:
                 default: 'op'
                 description: 'Permissions for people with YOUTUBE rank'
                 children:
-                  bedrockplay.bedrock:
+                  happybe.bedrock:
                     default: 'op'
                     description: 'Permissions for people with BEDROCK rank'
                     children:
-                      bedrockplay.mvp:
+                      happybe.mvp:
                         default: 'op'
                         description: 'Permissions for people with MVP rank'
                         children:
-                          bedrockplay.vip:
+                          happybe.vip:
                             default: 'op'
                             description: 'Permissions for people with VIP'
