@@ -26,7 +26,7 @@ public class UpdateRowQuery extends AsyncQuery {
         this.updates.putAll(updates);
         this.conditionKey = conditionKey;
         this.conditionValue = conditionValue;
-        this.table = "BP_" + table;
+        this.table = "HB_" + table;
     }
 
     @Override

@@ -6,7 +6,6 @@ import eu.happybe.openapi.form.types.ModalForm;
 import eu.happybe.openapi.form.types.SimpleForm;
 import lombok.Getter;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class FormCallbackResponse {
@@ -17,7 +16,7 @@ public class FormCallbackResponse {
     private final Form form;
 
     @Getter
-    private Set jsonData = new HashSet<>();
+    private Set jsonData;
 
     @Getter
     private int buttonClicked = -1;
@@ -35,9 +34,14 @@ public class FormCallbackResponse {
         else {
             System.out.println(response);
             try {
-                jsonData = (new Gson()).fromJson(response, jsonData.getClass());
+                this.jsonData = (new Gson()).fromJson(response, jsonData.getClass());
+                if(this.jsonData.size() == 0) {
+                    this.jsonData = null;
+                }
             }
-            catch (Exception ignored) { }
+            catch (Exception ignored) {
+                this.jsonData = null;
+            }
         }
     }
 }

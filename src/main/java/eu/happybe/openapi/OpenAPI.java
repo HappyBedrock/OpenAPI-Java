@@ -13,6 +13,7 @@ import eu.happybe.openapi.form.FormQueue;
 import eu.happybe.openapi.mysql.DatabaseData;
 import eu.happybe.openapi.mysql.QueryQueue;
 import eu.happybe.openapi.mysql.query.LazyRegisterQuery;
+import eu.happybe.openapi.party.PartyManager;
 import eu.happybe.openapi.ranks.RankDatabase;
 import eu.happybe.openapi.scoreboard.packets.RemoveObjectivePacket;
 import eu.happybe.openapi.scoreboard.packets.SetDisplayObjectivePacket;
@@ -57,6 +58,7 @@ public class OpenAPI extends PluginBase implements Listener {
 
         QueryQueue.submitQuery(new LazyRegisterQuery(event.getPlayer().getName()), (query -> {
             RankDatabase.savePlayerRank(player, String.valueOf(((LazyRegisterQuery)query).row.get("Rank")));
+            PartyManager.handleLoginQuery(player, (LazyRegisterQuery) query);
         }));
     }
 
@@ -73,5 +75,6 @@ public class OpenAPI extends PluginBase implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         BossBarBuilder.removeBossBar(event.getPlayer());
         FormQueue.handleQuit(event.getPlayer());
+        PartyManager.handleQuit(event.getPlayer());
     }
 }
