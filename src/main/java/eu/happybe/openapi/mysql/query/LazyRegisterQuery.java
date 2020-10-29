@@ -21,7 +21,7 @@ public class LazyRegisterQuery extends AsyncQuery {
 
     @Override
     public void query(Statement statement) throws SQLException {
-        ResultSet result = statement.executeQuery("SELECT * FROM BP_Values WHERE Name='" + this.player + "';");
+        ResultSet result = statement.executeQuery("SELECT * FROM HB_Values WHERE Name='" + this.player + "';");
         if(!result.next()) {
             return;
         }

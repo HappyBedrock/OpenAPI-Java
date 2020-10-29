@@ -22,12 +22,12 @@ public class BanQuery extends AsyncQuery {
 
     @Override
     public void query(Statement statement) throws SQLException {
-        ResultSet result = statement.executeQuery("SELECT * FROM BP_Bans WHERE Name='"+this.player+"';");
+        ResultSet result = statement.executeQuery("SELECT * FROM HB_Bans WHERE Name='"+this.player+"';");
         if(!result.next()) {
-            statement.executeUpdate("INSERT INTO BP_Bans (Name, Admin, Time, Reason) VALUES ('"+this.player+"', '"+ this.admin + "', '" + this.time + "', '" + this.reason + "');");
+            statement.executeUpdate("INSERT INTO HB_Bans (Name, Admin, Time, Reason) VALUES ('"+this.player+"', '"+ this.admin + "', '" + this.time + "', '" + this.reason + "');");
         }
         else {
-            statement.executeUpdate("UPDATE BP_Bans SET Admin='"+this.admin+"', Time='"+this.time+"', Reason='"+this.reason+"' WHERE Name='"+this.player+"';");
+            statement.executeUpdate("UPDATE HB_Bans SET Admin='"+this.admin+"', Time='"+this.time+"', Reason='"+this.reason+"' WHERE Name='"+this.player+"';");
         }
     }
 }

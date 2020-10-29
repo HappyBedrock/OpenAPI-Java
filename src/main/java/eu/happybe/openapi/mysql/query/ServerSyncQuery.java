@@ -24,9 +24,9 @@ public class ServerSyncQuery extends AsyncQuery {
 
     @Override
     public void query(Statement statement) throws SQLException {
-        statement.executeUpdate("UPDATE BP_Servers SET OnlinePlayers='" + this.onlinePlayers + "' WHERE ServerName='" + this.currentServer + "';");
+        statement.executeUpdate("UPDATE HB_Servers SET OnlinePlayers='" + this.onlinePlayers + "' WHERE ServerName='" + this.currentServer + "';");
 
-        ResultSet result = statement.executeQuery("SELECT * FROM BP_Servers;");
+        ResultSet result = statement.executeQuery("SELECT * FROM HB_Servers;");
         while (result.next()) {
             Map<String, Object> row = new ConcurrentHashMap<>();
             for (int i = 1; i <= result.getMetaData().getColumnCount(); i++) {

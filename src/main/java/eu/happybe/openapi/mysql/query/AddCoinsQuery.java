@@ -18,9 +18,9 @@ public class AddCoinsQuery extends AsyncQuery {
     @Override
     public void query(Statement statement) throws SQLException {
         if(this.coins < 0) {
-            statement.executeUpdate("UPDATE BP_Values SET Coins=Coins-" + Math.abs(this.coins) + " WHERE Name='"+this.player+"'");
+            statement.executeUpdate("UPDATE HB_Values SET Coins=Coins-" + Math.abs(this.coins) + " WHERE Name='"+this.player+"'");
             return;
         }
-        statement.executeUpdate("UPDATE BP_Values SET Coins=Coins+" + coins + " WHERE Name='"+this.player+"';");
+        statement.executeUpdate("UPDATE HB_Values SET Coins=Coins+" + coins + " WHERE Name='"+this.player+"';");
     }
 }

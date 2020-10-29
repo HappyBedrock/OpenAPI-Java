@@ -18,7 +18,7 @@ public class AddPointQuery extends AsyncQuery {
     public AddPointQuery(String player, String key, String table) {
         this.player = player;
         this.key = key;
-        this.table = "BP_" + table;
+        this.table = "HB_" + table;
     }
 
     @Override
