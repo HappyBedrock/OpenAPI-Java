@@ -44,6 +44,9 @@ public class LazyRegisterQuery extends AsyncQuery {
         }
 
         result = statement.executeQuery("SELECT * FROM HB_Parties WHERE FIND_IN_SET('"+this.player+"', Members) or Owner='"+this.player+"';");
+        if(!result.next()) {
+            return;
+        }
         for(int i = 1; i <= columnCount; i++) {
             String key = result.getMetaData().getColumnName(i);
             Object value = result.getObject(i);

@@ -4,7 +4,7 @@ import lombok.Getter;
 
 public class DatabaseData {
 
-    public static final String DATABASE = "BedrockPlay";
+    public static final String DATABASE = "HappyBE";
 
     @Getter
     private static String host;
