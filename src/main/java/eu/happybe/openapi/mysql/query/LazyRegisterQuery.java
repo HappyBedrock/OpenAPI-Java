@@ -47,6 +47,8 @@ public class LazyRegisterQuery extends AsyncQuery {
         if(!result.next()) {
             return;
         }
+
+        columnCount = result.getMetaData().getColumnCount();
         for(int i = 1; i <= columnCount; i++) {
             String key = result.getMetaData().getColumnName(i);
             Object value = result.getObject(i);

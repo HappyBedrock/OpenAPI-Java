@@ -19,6 +19,7 @@ import eu.happybe.openapi.scoreboard.packets.RemoveObjectivePacket;
 import eu.happybe.openapi.scoreboard.packets.SetDisplayObjectivePacket;
 import eu.happybe.openapi.scoreboard.packets.SetScorePacket;
 import eu.happybe.openapi.servers.ServerManager;
+import eu.happybe.openapi.utils.PlayerUtils;
 import lombok.Getter;
 
 public class OpenAPI extends PluginBase implements Listener {
@@ -59,6 +60,7 @@ public class OpenAPI extends PluginBase implements Listener {
         QueryQueue.submitQuery(new LazyRegisterQuery(event.getPlayer().getName()), (query -> {
             RankDatabase.savePlayerRank(player, String.valueOf(((LazyRegisterQuery)query).row.get("Rank")));
             PartyManager.handleLoginQuery(player, (LazyRegisterQuery) query);
+            PlayerUtils.updateNameTag(player);
         }));
     }
 

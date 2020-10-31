@@ -21,6 +21,9 @@ public class RemovePartyMemberQuery extends AsyncQuery {
     @Override
     public void query(Statement statement) throws SQLException {
         ResultSet result = statement.executeQuery("SELECT * FROM HB_Parties WHERE Owner='"+this.owner+"';");
+        if(!result.next()) {
+            return;
+        }
 
         String members = result.getString("Members");
         String[] splitMembers = new String[] {};
