@@ -9,6 +9,7 @@ import cn.nukkit.event.server.DataPacketReceiveEvent;
 import cn.nukkit.network.protocol.ModalFormResponsePacket;
 import cn.nukkit.plugin.PluginBase;
 import eu.happybe.openapi.bossbar.BossBarBuilder;
+import eu.happybe.openapi.event.LoginQueryReceiveEvent;
 import eu.happybe.openapi.form.FormQueue;
 import eu.happybe.openapi.mysql.DatabaseData;
 import eu.happybe.openapi.mysql.QueryQueue;
@@ -61,6 +62,7 @@ public class OpenAPI extends PluginBase implements Listener {
             RankDatabase.savePlayerRank(player, String.valueOf(((LazyRegisterQuery)query).row.get("Rank")));
             PartyManager.handleLoginQuery(player, (LazyRegisterQuery) query);
             PlayerUtils.updateNameTag(player);
+            this.getServer().getPluginManager().callEvent(new LoginQueryReceiveEvent(player, (LazyRegisterQuery) query));
         }));
     }
 

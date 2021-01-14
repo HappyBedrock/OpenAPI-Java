@@ -7,7 +7,7 @@ import eu.happybe.openapi.ranks.RankDatabase;
 public class PlayerUtils {
 
     public static void updateNameTag(Player player) {
-        PlayerUtils.updateNameTag(player, player.namedTag.exist("NameTagColor") ? player.namedTag.getString("NameTagColor") : "§7");
+        PlayerUtils.updateNameTag(player, player.namedTag.exist("NameTagColor") ? player.namedTag.getString("NameTagColor") : "§e");
     }
 
     public static void updateNameTag(Player player, String color) {
@@ -17,6 +17,6 @@ public class PlayerUtils {
         }
 
         player.namedTag.putString("NameTagColor", color);
-        player.setNameTag(rank.getFormatForNameTag() + color + player.getName() + "\n§5" + DeviceData.getDeviceName(player));
+        player.setNameTag(rank.getFormatForNameTag() + color + player.getName() + "\n§b" + DeviceData.getDeviceName(player));
     }
 }
