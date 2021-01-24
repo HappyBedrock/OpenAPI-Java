@@ -2,26 +2,20 @@ package eu.happybe.openapi.stats;
 
 import cn.nukkit.Player;
 import eu.happybe.openapi.mysql.QueryQueue;
-import eu.happybe.openapi.mysql.query.AddPointQuery;
-import lombok.Getter;
+import eu.happybe.openapi.mysql.query.AddExperienceQuery;
 
-public enum Stats {
+public class Stats {
 
-    POINT_CRYSTAL("Crystals", "Values"),
-    POINT_UHCRUN_WIN("UHCRunWins", "Stats"),
-    POINT_UHCRUN_KILL("UHCRunKills", "Stats");
+    public static void addExperience(Player player, int experience) {
+        QueryQueue.submitQuery(new AddExperienceQuery(player.getName(), experience), query -> {
+            if(!(query instanceof AddExperienceQuery)) {
+                return;
+            }
 
-    @Getter
-    private final String columnName;
-    @Getter
-    private final String table;
-
-    Stats(String columnName, String table) {
-        this.columnName = columnName;
-        this.table = table;
-    }
-
-    public static void addPoint(Player player, Stats stat) {
-        QueryQueue.submitQuery(new AddPointQuery(player.getName(), stat.getColumnName(), stat.getTable()));
+            if(((AddExperienceQuery) query).levelUp && player.isOnline()) {
+                player.sendMessage("§9HappyBedrock> §a§lLEVEL UP! §r§aCurrent level: {$query->newLevel}!");
+                player.namedTag.putInt("HappyBedrockLevel", ((AddExperienceQuery) query).newLevel);
+            }
+        });
     }
 }

@@ -1,8 +1,9 @@
 package eu.happybe.openapi.servers;
 
 import cn.nukkit.Player;
-import cn.nukkit.network.protocol.TransferPacket;
 import lombok.Getter;
+import vixikhd.portal.Portal;
+import vixikhd.portal.packet.TransferRequestPacket;
 
 public class Server {
 
@@ -60,10 +61,6 @@ public class Server {
     }
     
     public void transferPlayerHere(Player player) {
-        TransferPacket pk = new TransferPacket();
-        pk.address = this.getServerAddress();
-        pk.port = this.getServerPort();
-
-        player.dataPacket(pk);
+        Portal.getInstance().getThread().addPacketToQueue(TransferRequestPacket.create(player.getUniqueId(), this.getServerName().substring(0, this.getServerName().indexOf("-")), this.getServerName()));
     }
 }
