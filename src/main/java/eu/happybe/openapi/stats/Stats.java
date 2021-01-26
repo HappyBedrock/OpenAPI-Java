@@ -13,7 +13,7 @@ public class Stats {
             }
 
             if(((AddExperienceQuery) query).levelUp && player.isOnline()) {
-                player.sendMessage("§9HappyBedrock> §a§lLEVEL UP! §r§aCurrent level: {$query->newLevel}!");
+                player.sendMessage("§9HappyBedrock> §a§lLEVEL UP! §r§aCurrent level: {" + ((AddExperienceQuery) query).newLevel + "}!");
                 player.namedTag.putInt("HappyBedrockLevel", ((AddExperienceQuery) query).newLevel);
             }
         });
