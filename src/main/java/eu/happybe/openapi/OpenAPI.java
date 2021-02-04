@@ -16,6 +16,7 @@ import eu.happybe.openapi.mysql.QueryQueue;
 import eu.happybe.openapi.mysql.query.LazyRegisterQuery;
 import eu.happybe.openapi.party.PartyManager;
 import eu.happybe.openapi.ranks.RankDatabase;
+import eu.happybe.openapi.scoreboard.ScoreboardBuilder;
 import eu.happybe.openapi.scoreboard.packets.RemoveObjectivePacket;
 import eu.happybe.openapi.scoreboard.packets.SetDisplayObjectivePacket;
 import eu.happybe.openapi.scoreboard.packets.SetScorePacket;
@@ -80,5 +81,6 @@ public class OpenAPI extends PluginBase implements Listener {
         BossBarBuilder.removeBossBar(event.getPlayer());
         FormQueue.handleQuit(event.getPlayer());
         PartyManager.handleQuit(event.getPlayer());
+        ScoreboardBuilder.removeScoreBoard(event.getPlayer());
     }
 }

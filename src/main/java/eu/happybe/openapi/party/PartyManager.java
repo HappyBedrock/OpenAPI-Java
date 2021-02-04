@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class PartyManager {
 
     private static final Map<String, Party> parties = new HashMap<>();
-    private static final Map<String, List<Player>> unloggedPartySessions = new HashMap<>(); // Everyone (owner too) from party whose transferred to current server, they are collected in delayed task
+    private static final Map<String, List<Player>> unloggedPartySessions = new HashMap<>(); // Everyone (owner too) from party whose transferred to current server; they are collected in delayed task
     private static final Map<String, BiConsumer<List<Player>, Party>> offlineSessionHandlers = new HashMap<>();
 
     public static void createParty(Player player) {
