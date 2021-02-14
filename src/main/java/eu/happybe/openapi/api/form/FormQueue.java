@@ -1,9 +1,7 @@
-package eu.happybe.openapi.form;
+package eu.happybe.openapi.api.form;
 
-import cn.nukkit.Player;
-import cn.nukkit.network.protocol.ModalFormRequestPacket;
-import cn.nukkit.network.protocol.ModalFormResponsePacket;
 import eu.happybe.openapi.OpenAPI;
+import io.gomint.entity.EntityPlayer;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -14,7 +12,7 @@ public class FormQueue {
 
     public static Map<String, Map<Integer, Form>> formQueue = new HashMap<>();
 
-    public static void sendForm(Player player, Form form) {
+    public static void sendForm(EntityPlayer player, Form form) {
         int formId = FormQueue.getWindowId(player);
         if(!FormQueue.formQueue.containsKey(player.getName())) {
             FormQueue.formQueue.put(player.getName(), new HashMap<>());
@@ -29,7 +27,7 @@ public class FormQueue {
         player.dataPacket(pk);
     }
 
-    private static int getWindowId(Player player) {
+    private static int getWindowId(EntityPlayer player) {
         int windowId;
 
         try {

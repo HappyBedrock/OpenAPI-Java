@@ -1,13 +1,14 @@
-package eu.happybe.openapi.form.types;
+package eu.happybe.openapi.api.form.types;
 
-import eu.happybe.openapi.form.Form;
+import eu.happybe.openapi.api.form.Form;
+import io.gomint.gui.Modal;
 
 public class ModalForm extends Form {
 
+    private final Modal ui;
+
     public ModalForm(String title, String content) {
-        this.getData().put("type", "modal");
-        this.getData().put("title", title);
-        this.getData().put("content", content);
+        this.ui = Modal.create(title, content);
     }
 
     public ModalForm(String title) {
@@ -19,13 +20,13 @@ public class ModalForm extends Form {
     }
 
     public ModalForm setFirstButton(String text) {
-        this.getData().put("button1", text);
+        this.ui.trueText(text);
 
         return this;
     }
 
     public ModalForm setSecondButton(String text) {
-        this.getData().put("button2", text);
+        this.ui.falseText(text);
 
         return this;
     }

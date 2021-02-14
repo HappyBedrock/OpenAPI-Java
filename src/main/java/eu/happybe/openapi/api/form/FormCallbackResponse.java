@@ -1,9 +1,8 @@
-package eu.happybe.openapi.form;
+package eu.happybe.openapi.api.form;
 
-import cn.nukkit.Player;
-import com.google.gson.Gson;
-import eu.happybe.openapi.form.types.ModalForm;
-import eu.happybe.openapi.form.types.SimpleForm;
+import eu.happybe.openapi.api.form.types.ModalForm;
+import eu.happybe.openapi.api.form.types.SimpleForm;
+import io.gomint.entity.EntityPlayer;
 import lombok.Getter;
 
 import java.util.Set;
@@ -11,7 +10,7 @@ import java.util.Set;
 public class FormCallbackResponse {
 
     @Getter
-    private final Player player;
+    private final EntityPlayer player;
     @Getter
     private final Form form;
 
@@ -21,7 +20,7 @@ public class FormCallbackResponse {
     @Getter
     private int buttonClicked = -1;
 
-    public FormCallbackResponse(Player player, Form form, String response) {
+    public FormCallbackResponse(EntityPlayer player, Form form, String response) {
         this.player = player;
         this.form = form;
 

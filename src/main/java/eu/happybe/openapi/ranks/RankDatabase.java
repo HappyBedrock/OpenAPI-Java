@@ -1,9 +1,11 @@
 package eu.happybe.openapi.ranks;
 
-import cn.nukkit.Player;
+import cn.nukkit.EntityPlayer;
 import eu.happybe.openapi.OpenAPI;
 import eu.happybe.openapi.mysql.QueryQueue;
 import eu.happybe.openapi.mysql.query.UpdateRowQuery;
+import io.gomint.GoMint;
+import io.gomint.entity.EntityPlayer;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -39,21 +41,21 @@ public class RankDatabase {
         }
     }
 
-    public static void savePlayerRank(Player player, String rank) {
-        RankDatabase.savePlayerRank(player, rank, false);
+    public static void saveEntityPlayerRank(EntityPlayer player, String rank) {
+        RankDatabase.saveEntityPlayerRank(player, rank, false);
     }
 
-    public static void savePlayerRank(Player player, String rank, boolean saveToDatabase) {
+    public static void saveEntityPlayerRank(EntityPlayer player, String rank, boolean saveToDatabase) {
         Rank targetRank = RankDatabase.getRankByName(rank);
         if(targetRank == null) {
-            player.kick("Invalid rank (" + rank + ")");
-            OpenAPI.getInstance().getLogger().error("Invalid rank received from database (" + rank + ") for player " + player.getName() + "!");
+            player.disconnect("Invalid rank (" + rank + ")");
+            OpenAPI.getInstance().logger().error("Invalid rank received from database (" + rank + ") for player " + player.name() + "!");
             return;
         }
 
-        player.namedTag.putString("Rank", targetRank.getRankName());
+//        player.namedTag.putString("Rank", targetRank.getRankName());
 
-        player.recalculatePermissions();
+        player.permissionManager();
         for(String permission : targetRank.getPermissions()) {
             player.addAttachment(OpenAPI.getInstance(), permission, true);
         }
@@ -63,7 +65,7 @@ public class RankDatabase {
         }
     }
 
-    public static Rank getPlayerRank(Player player) {
+    public static Rank getEntityPlayerRank(EntityPlayer player) {
         return RankDatabase.getRankByName(player.namedTag.getString("Rank"));
     }
 

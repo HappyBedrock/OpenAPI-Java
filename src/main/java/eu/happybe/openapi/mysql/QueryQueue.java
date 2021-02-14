@@ -1,7 +1,7 @@
 package eu.happybe.openapi.mysql;
 
-import cn.nukkit.Server;
 import eu.happybe.openapi.OpenAPI;
+import io.gomint.scheduler.Task;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +20,8 @@ public class QueryQueue {
         query.user = DatabaseData.getUser();
         query.password = DatabaseData.getPassword();
 
-        Server.getInstance().getScheduler().scheduleAsyncTask(OpenAPI.getInstance(), query);
+        Task task = OpenAPI.getInstance().scheduler().executeAsync(query);
+        task.onComplete(query::onCompletion);
 
         if(callback != null) {
             QueryQueue.callbacks.put(query, callback);

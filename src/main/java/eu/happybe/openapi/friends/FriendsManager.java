@@ -1,22 +1,22 @@
 package eu.happybe.openapi.friends;
 
-import cn.nukkit.Player;
-import cn.nukkit.Server;
-import eu.happybe.openapi.form.FormQueue;
-import eu.happybe.openapi.form.types.ModalForm;
+import eu.happybe.openapi.api.form.FormQueue;
+import eu.happybe.openapi.api.form.types.ModalForm;
 import eu.happybe.openapi.mysql.QueryQueue;
 import eu.happybe.openapi.mysql.query.AddFriendQuery;
+import io.gomint.GoMint;
+import io.gomint.entity.EntityPlayer;
 
 import java.util.function.BiConsumer;
 
 public class FriendsManager {
 
-    public static void setFriends(Player player, Player friend) {
+    public static void setFriends(EntityPlayer player, EntityPlayer friend) {
         FriendsManager.setFriends(player, friend, null);
     }
 
-    public static void setFriends(Player player, Player friend, BiConsumer<Player, AddFriendQuery> callback) {
-        QueryQueue.submitQuery(new AddFriendQuery(player.getName(), friend.getName()), addFriendsQuery -> {
+    public static void setFriends(EntityPlayer player, EntityPlayer friend, BiConsumer<EntityPlayer, AddFriendQuery> callback) {
+        QueryQueue.submitQuery(new AddFriendQuery(player.name(), friend.name()), addFriendsQuery -> {
             if(callback != null) {
                 callback.accept(player, (AddFriendQuery) addFriendsQuery);
             }
@@ -24,22 +24,23 @@ public class FriendsManager {
     }
 
     // TODO - Move this to BasicEssentials
-    public static void sendFriendRequest(Player player, Player newFriend) {
-        ModalForm form = new ModalForm("Friend Request", player.getName() + " sent you a friend request.");
+    public static void sendFriendRequest(EntityPlayer player, EntityPlayer newFriend) {
+        ModalForm form = new ModalForm("Friend Request", player.name() + " sent you a friend request.");
         form.setFirstButton("§aAccept");
         form.setSecondButton("§cDecline");
 
-        form.setCustomData(player.getName());
+        form.setCustomData(player.name());
 
         form.setCallable(response -> {
-            Player friend = response.getPlayer();
+            EntityPlayer friend = response.getPlayer();
             if(response.getButtonClicked() == 1) {
                 friend.sendMessage("§9Friends> §cFriend request cancelled.");
                 return;
             }
 
-            Player sender = Server.getInstance().getPlayerExact((String) response.getForm().getCustomData());
-            if(sender == null || !sender.isOnline()) {
+            EntityPlayer sender = GoMint.instance().findPlayerByName((String)response.getForm().getCustomData());
+//            EntityPlayer sender = Server.getInstance().getEntityPlayerExact((String) response.getForm().getCustomData());
+            if(sender == null || !sender.online()) {
                 friend.sendMessage("§9Friends> §cFriend request expired.");
                 return;
             }

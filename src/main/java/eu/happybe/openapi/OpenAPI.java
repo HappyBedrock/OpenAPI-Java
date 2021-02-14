@@ -1,15 +1,7 @@
 package eu.happybe.openapi;
 
-import cn.nukkit.Player;
-import cn.nukkit.event.EventHandler;
-import cn.nukkit.event.Listener;
-import cn.nukkit.event.player.PlayerLoginEvent;
-import cn.nukkit.event.player.PlayerQuitEvent;
-import cn.nukkit.event.server.DataPacketReceiveEvent;
-import cn.nukkit.network.protocol.ModalFormResponsePacket;
-import cn.nukkit.plugin.PluginBase;
-import eu.happybe.openapi.bossbar.BossBarBuilder;
-import eu.happybe.openapi.form.FormQueue;
+import eu.happybe.openapi.api.bossbar.BossBarBuilder;
+import eu.happybe.openapi.api.form.FormQueue;
 import eu.happybe.openapi.mysql.DatabaseData;
 import eu.happybe.openapi.mysql.QueryQueue;
 import eu.happybe.openapi.mysql.query.LazyRegisterQuery;
@@ -20,14 +12,29 @@ import eu.happybe.openapi.scoreboard.packets.SetDisplayObjectivePacket;
 import eu.happybe.openapi.scoreboard.packets.SetScorePacket;
 import eu.happybe.openapi.servers.ServerManager;
 import eu.happybe.openapi.utils.PlayerUtils;
+import io.gomint.config.YamlConfig;
+import io.gomint.event.EventListener;
+import io.gomint.plugin.Plugin;
 import lombok.Getter;
+import lombok.SneakyThrows;
 
-public class OpenAPI extends PluginBase implements Listener {
+public class OpenAPI extends Plugin implements EventListener {
 
     @Getter
     private static OpenAPI instance;
 
+    @SneakyThrows
     @Override
+    public void onStartup() {
+        OpenAPI.instance = this;
+        // TODO - Save config
+
+        this.registerListener(this);
+
+        YamlConfig config = new YamlConfig(this.dataFolder() + "/config.yml").load().saveToMap();
+        DatabaseData.update();
+    }
+
     public void onEnable() {
         OpenAPI.instance = this;
         this.saveResource("/config.yml");
