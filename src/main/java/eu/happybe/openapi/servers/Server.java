@@ -2,8 +2,8 @@ package eu.happybe.openapi.servers;
 
 import cn.nukkit.Player;
 import lombok.Getter;
-import vixikhd.portal.Portal;
-import vixikhd.portal.packet.TransferRequestPacket;
+import vixikhd.portal.PortalAPI;
+import vixikhd.portal.network.packets.TransferRequestPacket;
 
 public class Server {
 
@@ -61,6 +61,10 @@ public class Server {
     }
     
     public void transferPlayerHere(Player player) {
-        Portal.getInstance().getThread().addPacketToQueue(TransferRequestPacket.create(player.getUniqueId(), this.getServerName().substring(0, this.getServerName().indexOf("-")), this.getServerName()));
+        PortalAPI.sendPacket(TransferRequestPacket.create(
+            player.getUniqueId(),
+            this.getServerName().substring(0, this.getServerName().indexOf("-")), // TODO - Add api method for group
+            this.getServerName()
+        ));
     }
 }

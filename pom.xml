@@ -72,7 +72,7 @@
         </dependency>
         <dependency>
             <groupId>vixikhd.portal</groupId>
-            <artifactId>Portal</artifactId>
+            <artifactId>portal-api</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
