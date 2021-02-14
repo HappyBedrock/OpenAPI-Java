@@ -29,7 +29,7 @@ public class ServerManager {
         String currentServerName = OpenAPI.getInstance().getConfig().getString("current-server-name");
         int currentServerPort = cn.nukkit.Server.getInstance().getPropertyInt("server-port");
 
-        ServerManager.updateServerData(currentServerName, "null", currentServerPort, 0, true, false);
+        ServerManager.updateServerData(currentServerName, "null", "172.18.0.1", currentServerPort, 0, true, false);
         QueryQueue.submitQuery(new LazyRegisterServerQuery(currentServerName, currentServerPort));
 
         ServerManager.currentServer = ServerManager.getServer(currentServerName);
@@ -44,6 +44,7 @@ public class ServerManager {
                     ServerManager.updateServerData(
                         (String) row.get("ServerName"),
                         (String) row.get("ServerAlias"),
+                        (String) row.get("ServerAddress"),
                         (Integer) row.get("ServerPort"),
                         (Integer) row.get("OnlinePlayers"),
                         (Boolean) row.get("IsOnline"),
@@ -66,9 +67,9 @@ public class ServerManager {
         connection.close();
     }
 
-    public static void updateServerData(String serverName, String serverAlias, int serverPort, int onlinePlayers, boolean isOnline, boolean isWhitelisted) {
+    public static void updateServerData(String serverName, String serverAlias, String serverAddress, int serverPort, int onlinePlayers, boolean isOnline, boolean isWhitelisted) {
         if(!ServerManager.servers.containsKey(serverName)) {
-            Server server = new Server(serverName, serverAlias, serverPort, onlinePlayers, isOnline, isWhitelisted);
+            Server server = new Server(serverName, serverAlias, serverAddress, serverPort, onlinePlayers, isOnline, isWhitelisted);
             ServerManager.servers.put(serverName, server);
             OpenAPI.getInstance().getLogger().info("§aRegistered new server (" + serverName + ")");
 
@@ -87,7 +88,7 @@ public class ServerManager {
             return;
         }
 
-        ServerManager.servers.get(serverName).update(serverName, serverAlias, serverPort, onlinePlayers, isOnline, isWhitelisted);
+        ServerManager.servers.get(serverName).update(serverName, serverAlias, serverAddress, serverPort, onlinePlayers, isOnline, isWhitelisted);
     }
 
     public static ServerGroup getServerGroup(String name) {

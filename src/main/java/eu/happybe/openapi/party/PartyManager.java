@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class PartyManager {
 
     private static final Map<String, Party> parties = new HashMap<>();
-    private static final Map<String, List<Player>> unloggedPartySessions = new HashMap<>(); // Everyone (owner too) from party whose transferred to current server, they are collected in delayed task
+    private static final Map<String, List<Player>> unloggedPartySessions = new HashMap<>(); // Everyone (owner too) from party whose transferred to current server; they are collected in delayed task
     private static final Map<String, BiConsumer<List<Player>, Party>> offlineSessionHandlers = new HashMap<>();
 
     public static void createParty(Player player) {
@@ -56,7 +56,7 @@ public class PartyManager {
                 int i = 0, j = 0;
                 for(String friend : friends) {
                     Object value = data[i];
-                    if(value instanceof Boolean && ((Boolean) value).booleanValue()) {
+                    if(value instanceof Boolean && (Boolean) value) {
                         Player playerFriend = Server.getInstance().getPlayerExact(friend);
                         if(playerFriend == null) {
                             player.sendMessage("§9Parties> §6Your friend " + friend + " is no longer online.");
@@ -194,7 +194,9 @@ public class PartyManager {
                 QueryQueue.submitQuery(new RemovePartyMemberQuery(owner, toRemove));
             }
             for(Player inGame : onlineMembers.values()) {
-                party.addMember(inGame, false);
+                if(!inGame.getName().equals(owner)) {
+                    party.addMember(inGame, false);
+                }
             }
 
             if(whoseLeft.size() > 0) {

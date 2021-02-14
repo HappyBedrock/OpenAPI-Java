@@ -5,6 +5,7 @@ import eu.happybe.openapi.mysql.AsyncQuery;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class RemovePartyMemberQuery extends AsyncQuery {
             splitMembers = members.split(",");
         }
 
-        List<String> membersList = Arrays.asList(splitMembers);
+        List<String> membersList = new ArrayList<>(Arrays.asList(splitMembers));
         membersList.remove(this.member);
 
         members = String.join(",", membersList);

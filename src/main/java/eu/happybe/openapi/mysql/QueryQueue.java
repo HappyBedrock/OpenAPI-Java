@@ -28,11 +28,11 @@ public class QueryQueue {
     }
 
     public static void activateCallback(AsyncQuery query) {
-        if(!callbacks.containsKey(query)) {
+        if(!QueryQueue.callbacks.containsKey(query)) {
             return;
         }
 
-        Consumer<AsyncQuery> callback = QueryQueue.callbacks.get(query);
+        Consumer<AsyncQuery> callback = QueryQueue.callbacks.remove(query);
         callback.accept(query);
     }
 }
