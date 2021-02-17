@@ -33,7 +33,7 @@ public class PartyManager {
             }).collect(Collectors.toList());
 
             if(friends.size() == 0) {
-                player.sendMessage("§9Parties> §cCannot create party - there aren't any online friends on the current server without a party.");
+                player.sendMessage("§l§o§ePARTIES§r§f: §bCannot create party - there aren't any online friends on the current server without a party.");
                 return;
             }
 
@@ -59,7 +59,7 @@ public class PartyManager {
                     if(value instanceof Boolean && (Boolean) value) {
                         Player playerFriend = Server.getInstance().getPlayerExact(friend);
                         if(playerFriend == null) {
-                            player.sendMessage("§9Parties> §6Your friend " + friend + " is no longer online.");
+                            player.sendMessage("§l§o§ePARTIES§r§f: §bYour friend " + friend + " is no longer online.");
                             i++;
                             continue;
                         }
@@ -69,7 +69,7 @@ public class PartyManager {
                     }
                 }
 
-                player.sendMessage("§9Party> §aParty created (" + j + " invitations sent)!");
+                player.sendMessage("§l§o§ePARTY§r§f: §bParty created (" + j + " invitations sent)!");
             });
 
             FormQueue.sendForm(player, form);
@@ -83,19 +83,19 @@ public class PartyManager {
 
         form.setCallable(response -> {
             if(!owner.isOnline()) {
-                friend.sendMessage("§9Parties> §cInvitation expired.");
+                friend.sendMessage("§l§o§ePARTIES§r§f: §bInvitation expired.");
                 return;
             }
 
             Party party = PartyManager.parties.getOrDefault(owner.getName(), null);
             if(party == null) {
-                friend.sendMessage("§9Parties> §cParty doesn't exist anymore.");
+                friend.sendMessage("§l§o§ePARTIES§r§f: §bParty doesn't exist anymore.");
                 return;
             }
 
             if(response.getButtonClicked() == 0) {
                 party.addMember(friend);
-                party.broadcastMessage("§9Party> §a" + friend.getName() + " joined the party!");
+                party.broadcastMessage("§l§o§ePARTY§r§f: §b" + friend.getName() + " joined the party!");
             }
         });
 
@@ -120,7 +120,7 @@ public class PartyManager {
         QueryQueue.submitQuery(new DestroyPartyQuery(party.getOwner().getName()));
 
         for(Player player : party.getMembers().values()) {
-            player.sendMessage("§9Party> " + party.getOwner().getName() + " has destroyed his party.");
+            player.sendMessage("§l§o§ePARTY§r§f: §b"+ party.getOwner().getName() + " has destroyed his party.");
         }
 
         PartyManager.removeParty(party);
@@ -167,7 +167,7 @@ public class PartyManager {
             if(ownerPlayer == null || (!ownerPlayer.isOnline())) {
                 QueryQueue.submitQuery(new DestroyPartyQuery(owner));
                 for(Player member : PartyManager.unloggedPartySessions.get(owner)) {
-                    member.sendMessage("§9Party> §cParty destroyed (It's owner left the game)");
+                    member.sendMessage("§l§o§ePARTY§r§f: §bParty destroyed (It's owner left the game)");
                 }
 
                 if(callback != null) {
@@ -200,7 +200,7 @@ public class PartyManager {
             }
 
             if(whoseLeft.size() > 0) {
-                party.broadcastMessage("§9Party> §c" + whoseLeft.size() + " party members left the game.");
+                party.broadcastMessage("§l§o§ePARTY§r§f: §b" + whoseLeft.size() + " party members left the game.");
             }
 
             if(callback != null) {
@@ -245,7 +245,7 @@ public class PartyManager {
         }
 
         if (party.getOwner().getName().equals(player.getName())) {
-            party.broadcastMessage("§9Party> §cDestroying the party as it's owner (" + player.getName() + ") left the game.");
+            party.broadcastMessage("§l§o§ePARTY§r§f: §bDestroying the party as it's owner (" + player.getName() + ") left the game.");
 
             PartyManager.destroyParty(party);
             return;

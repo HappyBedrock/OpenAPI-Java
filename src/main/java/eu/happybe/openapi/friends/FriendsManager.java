@@ -34,18 +34,18 @@ public class FriendsManager {
         form.setCallable(response -> {
             Player friend = response.getPlayer();
             if(response.getButtonClicked() == 1) {
-                friend.sendMessage("§9Friends> §cFriend request cancelled.");
+                friend.sendMessage("§l§o§eFRIENDS§r§f: §bFriend request cancelled.");
                 return;
             }
 
             Player sender = Server.getInstance().getPlayerExact((String) response.getForm().getCustomData());
             if(sender == null || !sender.isOnline()) {
-                friend.sendMessage("§9Friends> §cFriend request expired.");
+                friend.sendMessage("§l§o§eFRIENDS§r§f: §bFriend request expired.");
                 return;
             }
 
-            sender.sendMessage("§9Friends> §a" + friend + " accepted your friend request.");
-            friend.sendMessage("§9Friends> §aFriend request accepted!");
+            sender.sendMessage("§l§o§eFRIENDS§r§f: §b" + friend + " accepted your friend request.");
+            friend.sendMessage("§l§o§eFRIENDS§r§f: §bFriend request accepted!");
 
             FriendsManager.setFriends(sender, friend);
         });
