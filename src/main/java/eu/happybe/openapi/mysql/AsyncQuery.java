@@ -26,9 +26,12 @@ public abstract class AsyncQuery extends AsyncTask {
     }
 
     @Override
-    public void onCompletion(Server server) {
+    final public void onCompletion(Server server) {
+        this.complete(server);
         QueryQueue.activateCallback(this);
     }
 
     public abstract void query(Statement statement) throws SQLException;
+
+    public void complete(Server server) {}
 }

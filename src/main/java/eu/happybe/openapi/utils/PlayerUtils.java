@@ -17,6 +17,6 @@ public class PlayerUtils {
         }
 
         player.namedTag.putString("NameTagColor", color);
-        player.setNameTag(rank.getFormatForNameTag() + color + player.getName() + "\n§b" + DeviceData.getDeviceName(player));
+        player.setNameTag(rank.getDisplayFormat() + color + player.getName() + "\n§b" + DeviceData.getDeviceName(player));
     }
 }

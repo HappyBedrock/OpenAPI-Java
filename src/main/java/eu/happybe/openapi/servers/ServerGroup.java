@@ -39,7 +39,15 @@ public class ServerGroup {
         List<Server> servers = this.getServers().stream()
                 .filter(server -> !server.getServerName().equals(ServerManager.getCurrentServer().getServerName()))
                 .filter(Server::isOnline)
-                .filter(server -> (!server.isWhitelisted()) || player.hasPermission("happybe.operator"))
+                .filter(server -> {
+                    if(player.hasPermission("happybe.operator")) {
+                        return true;
+                    } else if(player.hasPermission("happybe.vip") && server.getWhitelistState() <= 2) {
+                        return true;
+                    } else if(player.hasPermission("happybe.voter") && server.getWhitelistState() <= 1) {
+                        return true;
+                    } else return server.getWhitelistState() == 0;
+                })
                 .sorted((firstServer, secondServer) -> Integer.compare(secondServer.getOnlinePlayers(), firstServer.getOnlinePlayers()))
                 .collect(Collectors.toList());
 

@@ -20,7 +20,7 @@ public class Server {
     @Getter
     public boolean isOnline;
     @Getter
-    public boolean isWhitelisted;
+    public int whitelistState;
 
     public Server(String serverName, String serverAlias, String serverAddress, int serverPort) {
         this(serverName, serverAlias, serverAddress, serverPort, 0);
@@ -31,11 +31,11 @@ public class Server {
     }
 
     public Server(String serverName, String serverAlias, String serverAddress, int serverPort, int onlinePlayers, boolean isOnline) {
-        this(serverName, serverAlias, serverAddress, serverPort, onlinePlayers, isOnline, false);
+        this(serverName, serverAlias, serverAddress, serverPort, onlinePlayers, isOnline, 0);
     }
 
-    public Server(String serverName, String serverAlias, String serverAddress, int serverPort, int onlinePlayers, boolean isOnline, boolean isWhitelisted) {
-        this.update(serverName, serverAlias, serverAddress, serverPort, onlinePlayers, isOnline, isWhitelisted);
+    public Server(String serverName, String serverAlias, String serverAddress, int serverPort, int onlinePlayers, boolean isOnline, int whitelistState) {
+        this.update(serverName, serverAlias, serverAddress, serverPort, onlinePlayers, isOnline, whitelistState);
     }
 
     public void update(String serverName, String serverAlias, String serverAddress, int serverPort) {
@@ -47,17 +47,17 @@ public class Server {
     }
     
     public void update(String serverName, String serverAlias, String serverAddress, int serverPort, int onlinePlayers, boolean isOnline) {
-        this.update(serverName, serverAlias, serverAddress, serverPort, onlinePlayers, isOnline, false);
+        this.update(serverName, serverAlias, serverAddress, serverPort, onlinePlayers, isOnline, 0);
     }
     
-    public void update(String serverName, String serverAlias, String serverAddress, int serverPort, int onlinePlayers, boolean isOnline, boolean isWhitelisted) {
+    public void update(String serverName, String serverAlias, String serverAddress, int serverPort, int onlinePlayers, boolean isOnline, int whitelistState) {
         this.serverName = serverName;
         this.serverAlias = serverAlias;
         this.serverAddress = serverAddress;
         this.serverPort = serverPort;
         this.onlinePlayers = onlinePlayers;
         this.isOnline = isOnline;
-        this.isWhitelisted = isWhitelisted;
+        this.whitelistState = whitelistState;
     }
     
     public void transferPlayerHere(Player player) {
@@ -66,5 +66,10 @@ public class Server {
             this.getServerName().substring(0, this.getServerName().indexOf("-")), // TODO - Add api method for group
             this.getServerName()
         ));
+    }
+
+    @Deprecated
+    public boolean isWhitelisted() {
+        return this.whitelistState != 0;
     }
 }

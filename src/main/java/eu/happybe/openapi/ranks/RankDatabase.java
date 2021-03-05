@@ -17,21 +17,21 @@ public class RankDatabase {
     public static void init() {
         List<Rank> ranks = Arrays.asList(
                 // Staff
-                new Rank("Owner", "§6§l", new String[]{"happybe.operator", "nukkit.command.gamemode", "nukkit.command.teleport", "nukkit.command.kick"}),
-                new Rank("Developer", "§6§l", new String[] {"happybe.operator"}),
-                new Rank("Admin", "§6§l", new String[] {"happybe.operator", "nukkit.command.teleport", "nukkit.command.kick"}),
-                new Rank("Mod", "§e§l", new String[] {"happybe.moderator", "nukkit.command.teleport", "nukkit.command.kick"}),
-                new Rank("Helper", "§e§l", new String[] {"happybe.helper", "nukkit.command.kick"}),
-                new Rank("Builder", "§e§l", new String[] {"happybe.builder"}),
+                new Rank("Owner", "§6§lOWNER", new String[]{"happybe.operator", "nukkit.command.gamemode", "nukkit.command.teleport", "nukkit.command.kick"}),
+                new Rank("Developer", "§6§lDEVELOPER", new String[] {"happybe.operator"}),
+                new Rank("Admin", "§6§lADMIN", new String[] {"happybe.operator", "nukkit.command.teleport", "nukkit.command.kick"}),
+                new Rank("Mod", "§e§lMOD", new String[] {"happybe.moderator", "nukkit.command.teleport", "nukkit.command.kick"}),
+                new Rank("Helper", "§e§lHELPER", new String[] {"happybe.helper", "nukkit.command.kick"}),
+                new Rank("Builder", "§e§lBUILDER", new String[] {"happybe.builder"}),
                 // Buyable ranks
-                new Rank("Bedrock", "§9§l", new String[] {"happybe.bedrock"}),
-                new Rank("MVP", "§3§l", new String[] {"happybe.mvp"}),
-                new Rank("VIP", "§3§l", new String[] {"happybe.vip"}),
+                new Rank("Bedrock", "§9§lBEDROCK", new String[] {"happybe.bedrock"}),
+                new Rank("MVP", "§3§lMVP§B+", new String[] {"happybe.mvp"}),
+                new Rank("VIP", "§b§lVIP", new String[] {"happybe.vip"}),
                 // Gettable ranks
-                new Rank("YouTube", "§c§l", new String[] {"happybe.bedrock"}),
-                new Rank("Voter", "§b§l", new String[] {"happybe.voter"}),
+                new Rank("YouTube", "§c§lYOUTUBE", new String[] {"happybe.bedrock"}),
+                new Rank("Voter", "§b§lVOTER", new String[] {"happybe.voter"}),
                 // Guest
-                new Rank("Guest", "§b§l", new String[] {}, false)
+                new Rank("Guest", "", new String[] {}, false)
         );
 
         for(Rank rank : ranks) {

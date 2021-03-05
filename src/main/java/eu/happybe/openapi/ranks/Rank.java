@@ -7,32 +7,35 @@ public class Rank {
     @Getter
     private final String rankName;
     @Getter
-    private final String formatting;
+    private final String displayFormat;
     @Getter
     private final String[] permissions;
     @Getter
     private final boolean isVisible;
 
-    public Rank(String rankName, String formatting, String[] permissions) {
-        this(rankName, formatting, permissions, true);
+    public Rank(String rankName, String displayFormat, String[] permissions) {
+        this(rankName, displayFormat, permissions, true);
     }
 
-    public Rank(String rankName, String formatting, String[] permissions, boolean isVisible) {
+    public Rank(String rankName, String displayFormat, String[] permissions, boolean isVisible) {
         this.rankName = rankName;
-        this.formatting = formatting;
+        this.displayFormat = displayFormat;
         this.permissions = permissions;
         this.isVisible = isVisible;
     }
 
+    @Deprecated
     public String getFormatForChat() {
-        return this.isVisible ? this.getFormatting() + this.getRankName().toUpperCase() + "§r " : "";
+        return this.getDisplayFormat();
     }
 
+    @Deprecated
     public String getFormatForDisplay() {
-        return this.getRankName();
+        return this.getDisplayFormat();
     }
 
+    @Deprecated
     public String getFormatForNameTag() {
-        return this.isVisible ? this.getFormatting() + this.getRankName().toUpperCase() + "§r " : "";
+        return this.getDisplayFormat();
     }
 }
